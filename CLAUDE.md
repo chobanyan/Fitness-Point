@@ -4,8 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository status
 
-This repository is currently an empty scaffold — it contains no source code, build tooling, package manifest, or tests. The only tracked files are `README.md` and a placeholder file. There are no commands to build, lint, or test yet.
+This is a learning/practice workspace (owner is a product manager taking a course), not a
+single product codebase. There is no shared build tooling, package manifest, or test suite
+at the repo root — each subfolder under `projects/`, `skills/`, or `products/` is its own
+independent piece of work and may have its own tooling once it has code in it.
 
-When the repository gains an actual codebase (e.g. a package.json, requirements.txt, or similar), update this file with:
-- The commands to install dependencies, build, lint, and run tests (including how to run a single test)
-- A high-level description of the architecture once one exists
+## Structure
+
+- `projects/` — full end-to-end things being built (an app, a prototype, a tool). One subfolder per project.
+- `skills/` — small, focused exercises practicing one specific skill. One subfolder per exercise.
+- `products/` — product concepts taken further than a course exercise, each with its own PRD. One subfolder per product.
+
+Each subfolder has its own `README.md` (or `PRD.md` for products) describing what it is.
+When a subfolder gains real code, its build/lint/test commands and architecture belong in
+that subfolder's own README, not here — update this file only if repo-wide tooling
+(e.g. a root package.json shared across projects) gets introduced.
