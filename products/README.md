@@ -9,4 +9,4 @@ To start a new product:
 2. Add a `PRD.md` (problem, target users, scope, success metrics)
 3. Build it out with Claude Code's help as the scope firms up
 
-Example: `products/fitness-point/`
+Example: `products/aca/`

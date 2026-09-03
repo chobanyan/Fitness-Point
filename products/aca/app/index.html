@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ACA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>ACA</h1>
+    <p class="tagline">Log your workouts. See your progress.</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="log-heading">
+      <h2 id="log-heading">Log a workout</h2>
+      <form id="workout-form">
+        <div class="field">
+          <label for="exercise">Exercise</label>
+          <input id="exercise" name="exercise" type="text" placeholder="e.g. Bench Press" required />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="sets">Sets</label>
+            <input id="sets" name="sets" type="number" min="1" required />
+          </div>
+          <div class="field">
+            <label for="reps">Reps</label>
+            <input id="reps" name="reps" type="number" min="1" required />
+          </div>
+          <div class="field">
+            <label for="weight">Weight (lbs)</label>
+            <input id="weight" name="weight" type="number" min="0" step="0.5" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required />
+        </div>
+        <button type="submit">Add to log</button>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="progress-heading">
+      <h2 id="progress-heading">Progress</h2>
+      <div class="field">
+        <label for="progress-exercise">Exercise</label>
+        <select id="progress-exercise"></select>
+      </div>
+      <div id="progress-chart" class="progress-chart" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-labelledby="history-heading">
+      <h2 id="history-heading">History</h2>
+      <table id="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Exercise</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Weight</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="history-body"></tbody>
+      </table>
+      <p id="empty-state" class="empty-state">No workouts logged yet — add your first one above.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
