@@ -28,6 +28,18 @@ and Prisma (SQLite by default).
   For the 24h reminder dispatch and the 1-year retention purge; also
   runnable directly via `npm run cron:reminders` / `npm run cron:cleanup`.
 
+## Try it online (no install)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chobanyan/Fitness-Point)
+
+Click the button, sign in with GitHub, pick the
+`claude/converse-bank-functionality-admin-habl3v` branch if asked, and Render
+builds and starts the app from `render.yaml` - no local setup required. It
+runs on Render's free tier as a normal always-on process, so the bundled
+SQLite database persists for as long as the service stays warm (it can
+reset after long inactivity or a redeploy - fine for a demo, not for
+production; see "Known gaps" below).
+
 ## Getting started
 
 ```bash
