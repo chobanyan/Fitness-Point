@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  background-color: #f5f7fb;
+  color: #101b42;
+}
