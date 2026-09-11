@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite has no native enum support in Prisma, so status/channel/kind values
+// are plain strings constrained by the TS union types in src/lib/types.ts
+// and validated at the API boundary (zod) - see BookingStatus there.
+// Allowed values: CONFIRMED | COMPLETED | NO_SHOW | CANCELLED
+
+// A short-lived hold on a slot while the client fills the form + OTP.
+// Never counts as "booked" for availability purposes once expired.
+model SlotHold {
+  id        String   @id @default(uuid())
+  date      String // yyyy-MM-dd, Yerevan calendar date
+  startTime String // HH:mm, Yerevan local time
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  // Draft booking details, captured when the OTP is requested so the
+  // verify step only needs the code (BR-009, BR-010).
+  firstName    String?
+  lastName     String?
+  phone        String?
+  email        String?
+  interestArea String?
+  locale       String?
+  consentAt    DateTime?
+
+  otpCodeHash String?
+  otpExpires  DateTime?
+  otpAttempts Int       @default(0)
+  otpSentAt   DateTime?
+
+  @@unique([date, startTime])
+  @@index([expiresAt])
+}
+
+model Booking {
+  id           String @id @default(uuid())
+  bookingCode  String @unique // human-facing Booking ID, e.g. BC-20260910-4F2A
+  date         String // yyyy-MM-dd (Yerevan)
+  startTime    String // HH:mm (Yerevan)
+  endTime      String // HH:mm (Yerevan) - startTime + slot length
+
+  firstName    String
+  lastName     String
+  phone        String // E.164
+  email        String
+  interestArea String
+  locale       String @default("hy") // hy | ru | en - language the flow was completed in
+
+  // CONFIRMED | COMPLETED | NO_SHOW | CANCELLED
+  status       String @default("CONFIRMED")
+  brokerName   String?
+  notes        String?
+  callAttempts Int    @default(0)
+
+  consentAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  cancelledAt DateTime?
+
+  notifications Notification[]
+
+  // Only one ACTIVE (non-cancelled) booking may occupy a given slot.
+  @@unique([date, startTime, status])
+  @@index([phone])
+  @@index([email])
+  @@index([date])
+}
+
+model Notification {
+  id        String  @id @default(uuid())
+  bookingId String
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  channel   String // EMAIL | SMS | MAILBOX
+  kind      String // confirmation | reminder_24h | cancelled | rescheduled | mailbox_new | no_show
+  status    String // SENT | FAILED | RETRIED
+  detail    String?
+  createdAt DateTime @default(now())
+}
+
+model Holiday {
+  id   String @id @default(uuid())
+  date String @unique // yyyy-MM-dd
+  note String?
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actor     String // "system" | "client" | admin username
+  action    String
+  entity    String
+  entityId  String?
+  detail    String?
+  createdAt DateTime @default(now())
+}

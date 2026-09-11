@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: converse-bank-booking-call
+    env: node
+    plan: free
+    branch: claude/converse-bank-functionality-admin-habl3v
+    buildCommand: npm ci && npx prisma db push && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        value: file:./dev.db
+      - key: ADMIN_USERNAME
+        value: broker
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: ADMIN_SESSION_SECRET
+        generateValue: true
+      - key: CRON_SECRET
+        generateValue: true
+      - key: INVESTMENTS_MAILBOX
+        value: Investments@conversebank.am
+      - key: NOTIFICATIONS_PROVIDER
+        value: console
+      - key: SMS_PROVIDER
+        value: console
+      - key: BOOKING_WINDOW_START
+        value: "16:00"
+      - key: BOOKING_WINDOW_END
+        value: "17:00"
+      - key: BOOKING_SLOT_MINUTES
+        value: "10"
+      - key: BOOKING_BUFFER_MINUTES
+        value: "5"
+      - key: BOOKING_HORIZON_DAYS
+        value: "3"
+      - key: BOOKING_MIN_LEAD_MINUTES
+        value: "30"
+      - key: BOOKING_HOLD_MINUTES
+        value: "10"
+      - key: BOOKING_MAX_ACTIVE_PER_CONTACT
+        value: "1"
+      - key: BOOKING_WORKING_DAYS
+        value: "2,3,4"
+      - key: BOOKING_RETENTION_DAYS
+        value: "365"
