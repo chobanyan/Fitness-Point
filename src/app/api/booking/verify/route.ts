@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { bookingConfig } from "@/lib/config";
 import { otpVerifySchema } from "@/lib/validation";
 import { verifyOtpHash } from "@/lib/otp";
-import { now, slotTimesForDay } from "@/lib/slots";
+import { now, slotTimesForDate } from "@/lib/slots";
 import { generateBookingCode } from "@/lib/bookingCode";
 import { notifyBookingCreated } from "@/lib/notifications";
 
@@ -35,7 +35,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   }
 
-  const slot = slotTimesForDay().find((s) => s.startTime === hold.startTime);
+  const daySlots = await slotTimesForDate(hold.date);
+  const slot = daySlots.find((s) => s.startTime === hold.startTime);
   if (!slot) {
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   }

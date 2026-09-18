@@ -91,6 +91,28 @@ model Holiday {
   note String?
 }
 
+// Broker-configurable weekly recurring availability pattern (one row per
+// weekday, 0=Sun..6=Sat). Replaces a single fixed working-days + window
+// pair so the broker can turn on/off any day and set its own hours from
+// the admin settings page, generating the client-facing calendar live.
+model WeeklyAvailability {
+  weekday   Int     @id // 0=Sun..6=Sat
+  enabled   Boolean @default(false)
+  startTime String  @default("10:00") // HH:mm, Yerevan local time
+  endTime   String  @default("17:00") // HH:mm, Yerevan local time
+}
+
+// Singleton row (id="default") holding the broker-editable booking rules:
+// call length, buffer between calls, rolling booking horizon and minimum
+// notice. Overridable from /admin/settings without a redeploy.
+model BookingRules {
+  id             String @id @default("default")
+  slotMinutes    Int    @default(10)
+  bufferMinutes  Int    @default(5)
+  horizonDays    Int    @default(3)
+  minLeadMinutes Int    @default(30)
+}
+
 model AuditLog {
   id        String   @id @default(uuid())
   actor     String // "system" | "client" | admin username

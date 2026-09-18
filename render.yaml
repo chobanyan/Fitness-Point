@@ -23,10 +23,6 @@ services:
         value: console
       - key: SMS_PROVIDER
         value: console
-      - key: BOOKING_WINDOW_START
-        value: "16:00"
-      - key: BOOKING_WINDOW_END
-        value: "17:00"
       - key: BOOKING_SLOT_MINUTES
         value: "10"
       - key: BOOKING_BUFFER_MINUTES
@@ -39,7 +35,5 @@ services:
         value: "10"
       - key: BOOKING_MAX_ACTIVE_PER_CONTACT
         value: "1"
-      - key: BOOKING_WORKING_DAYS
-        value: "2,3,4"
       - key: BOOKING_RETENTION_DAYS
         value: "365"

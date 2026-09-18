@@ -28,6 +28,21 @@ export interface AvailabilityResponse {
   };
 }
 
+export interface BookingRules {
+  id: string;
+  slotMinutes: number;
+  bufferMinutes: number;
+  horizonDays: number;
+  minLeadMinutes: number;
+}
+
+export interface WeeklyDay {
+  weekday: number; // 0=Sun..6=Sat
+  enabled: boolean;
+  startTime: string; // HH:mm
+  endTime: string; // HH:mm
+}
+
 export type BookingStatus = "CONFIRMED" | "COMPLETED" | "NO_SHOW" | "CANCELLED";
 export type NotificationChannel = "EMAIL" | "SMS" | "MAILBOX";
 export type NotificationStatus = "SENT" | "FAILED" | "RETRIED";
