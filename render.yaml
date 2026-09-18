@@ -3,7 +3,7 @@ services:
     name: converse-bank-booking-call
     env: node
     plan: free
-    branch: claude/converse-bank-functionality-admin-habl3v
+    branch: master
     buildCommand: npm ci && npx prisma db push && npm run build
     startCommand: npm run start
     envVars:
