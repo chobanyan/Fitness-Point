@@ -7,19 +7,25 @@ and Prisma (SQLite by default).
 
 ## What's here
 
-- **Public booking page** - `/booking-call`
-  Day/slot picker (rolling 3-day horizon, Tue/Wed/Thu, 16:00-17:00 Yerevan
-  time, 10-min slots + 5-min buffer), a 10-minute atomic slot hold, a
-  booking form (name, phone, email, interest area, consent), SMS OTP
-  verification, and a confirmation screen with a Booking ID and an .ics
-  download. Available in Armenian (default), Russian and English.
+- **Public booking flow** - `/` (Investment services landing page) and
+  `/booking-call` (same landing, modal opened automatically), matching the
+  brokerage-booking prototype's UX: an entry card + securities panel open a
+  modal wizard with 4 steps - topic, day/slot picker (rolling horizon, a
+  broker-editable weekly availability pattern, Yerevan time), contact
+  details with a topic/time recap, and SMS OTP verification - ending in a
+  confirmation screen with a Booking ID and an .ics download. Available in
+  Armenian (default), Russian and English.
 - **Admin back-office** - `/admin`
   Username/password sign-in, a bookings list with date/status filters,
-  inline status/notes/broker editing, and a settings page for public
-  holidays and the current business-rule configuration.
+  inline status/notes/broker editing, and a settings page where the broker
+  sets weekly availability (per-day on/off + hours), booking rules (call
+  length, buffer, booking window, minimum notice) and blocked dates, with a
+  live "generated availability" preview - all editable without a redeploy.
 - **Business rules engine** - `src/lib/slots.ts`, `src/lib/config.ts`
-  Working-days calendar, lead-time and hold-duration checks, all
-  overridable via env vars without a code change.
+  Weekly availability and booking rules are DB-backed and broker-editable
+  from `/admin/settings` (seeded from env-var defaults on first run: BRD
+  baseline Tue/Wed/Thu 16:00-17:00, 10-min slots + 5-min buffer); lead-time
+  and hold-duration checks remain env-configurable.
 - **Notifications** - `src/lib/notifications.ts`
   Email/SMS confirmation, .ics invite, Investments@ mailbox notice, 24h
   reminder, cancellation notice - all through a small provider-adapter

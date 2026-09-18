@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { bookingConfig } from "@/lib/config";
-import { candidateDates, isWithinLeadTime, now, slotTimesForDay } from "@/lib/slots";
+import {
+  candidateDates,
+  getBookingRules,
+  getWeeklyAvailability,
+  isWithinLeadTime,
+  now,
+  slotTimesForDate,
+} from "@/lib/slots";
 import { holdRequestSchema } from "@/lib/validation";
 
 export async function POST(req: Request) {
@@ -14,9 +21,14 @@ export async function POST(req: Request) {
   const { date, startTime } = parsed.data;
   const reference = now();
 
-  const [dates, slots] = await Promise.all([candidateDates(reference), Promise.resolve(slotTimesForDay())]);
+  const [rules, weekly] = await Promise.all([getBookingRules(), getWeeklyAvailability()]);
+  const [dates, slots, leadOk] = await Promise.all([
+    candidateDates(reference, rules, weekly),
+    slotTimesForDate(date, weekly, rules),
+    isWithinLeadTime(date, startTime, reference, rules),
+  ]);
   const isKnownSlot = slots.some((s) => s.startTime === startTime);
-  if (!dates.includes(date) || !isKnownSlot || !isWithinLeadTime(date, startTime, reference)) {
+  if (!dates.includes(date) || !isKnownSlot || !leadOk) {
     return NextResponse.json({ error: "slot_unavailable" }, { status: 409 });
   }
 

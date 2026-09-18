@@ -4,7 +4,6 @@ import { useState } from "react";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { Input } from "@/components/ui/Input";
-import { Radio } from "@/components/ui/Radio";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/Alert";
@@ -14,7 +13,6 @@ export interface BookingFormValues {
   lastName: string;
   phone: string;
   email: string;
-  interestArea: string;
   consent: boolean;
 }
 
@@ -22,12 +20,14 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function BookingForm({
   dict,
+  recap,
   onSubmit,
   onBack,
   submitting,
   serverError,
 }: {
   dict: Dictionary;
+  recap?: { topicLabel: string; whenLabel: string };
   onSubmit: (values: BookingFormValues) => void;
   onBack: () => void;
   submitting: boolean;
@@ -38,7 +38,6 @@ export function BookingForm({
     lastName: "",
     phone: "",
     email: "",
-    interestArea: dict.form.interestAreaOptions[0]?.value ?? "",
     consent: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -65,6 +64,20 @@ export function BookingForm({
       }}
     >
       {serverError && <Alert tone="error">{serverError}</Alert>}
+
+      {recap && (
+        <div className="rounded-xl border border-navy-100 bg-navy-50 px-4 py-3 text-sm">
+          <div className="flex justify-between py-0.5">
+            <span className="text-xs text-navy-500">{dict.recapTopic}</span>
+            <span className="font-semibold text-navy-900">{recap.topicLabel}</span>
+          </div>
+          <div className="flex justify-between py-0.5">
+            <span className="text-xs text-navy-500">{dict.recapWhen}</span>
+            <span className="font-semibold text-navy-900">{recap.whenLabel}</span>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input
           label={dict.form.firstName}
@@ -97,22 +110,6 @@ export function BookingForm({
           onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
           error={errors.email}
         />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-navy-800">{dict.form.interestArea}</span>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {dict.form.interestAreaOptions.map((opt) => (
-            <Radio
-              key={opt.value}
-              name="interestArea"
-              label={opt.label}
-              value={opt.value}
-              checked={values.interestArea === opt.value}
-              onChange={() => setValues((v) => ({ ...v, interestArea: opt.value }))}
-            />
-          ))}
-        </div>
       </div>
 
       <Checkbox

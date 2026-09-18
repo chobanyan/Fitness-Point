@@ -17,6 +17,21 @@ export interface Dictionary {
   stepDetails: string;
   stepOtp: string;
   stepDone: string;
+  stepTopic: string;
+  stepOfLabel: string;
+  chooseTopic: string;
+  modalClose: string;
+  recapTopic: string;
+  recapWhen: string;
+  landing: {
+    kicker: string;
+    title: string;
+    subtitle: string;
+    cta: string;
+    phoneNote: string;
+    securitiesNote: string;
+    securitiesCta: string;
+  };
   chooseDay: string;
   chooseSlot: string;
   noSlotsToday: string;
@@ -76,6 +91,21 @@ const en: Dictionary = {
   stepDetails: "Your details",
   stepOtp: "Confirm phone",
   stepDone: "Done",
+  stepTopic: "Topic",
+  stepOfLabel: "Step {current} of {total}",
+  chooseTopic: "What would you like to discuss?",
+  modalClose: "Close",
+  recapTopic: "Topic",
+  recapWhen: "When",
+  landing: {
+    kicker: "Brokerage & securities",
+    title: "Talk to a brokerage specialist",
+    subtitle: "Book a free consultation. Pick a time that works for you — we'll call you.",
+    cta: "Book a consultation",
+    phoneNote: "Prefer to talk now? Call {phone}",
+    securitiesNote: "Questions on securities? A specialist can walk you through it.",
+    securitiesCta: "Book a call",
+  },
   chooseDay: "Choose a day",
   chooseSlot: "Choose a time (Yerevan time)",
   noSlotsToday: "No free times on this day.",
@@ -140,6 +170,21 @@ const ru: Dictionary = {
   stepDetails: "Ваши данные",
   stepOtp: "Подтверждение телефона",
   stepDone: "Готово",
+  stepTopic: "Тема",
+  stepOfLabel: "Шаг {current} из {total}",
+  chooseTopic: "Что вы хотите обсудить?",
+  modalClose: "Закрыть",
+  recapTopic: "Тема",
+  recapWhen: "Когда",
+  landing: {
+    kicker: "Брокерские услуги и ценные бумаги",
+    title: "Поговорите со специалистом по брокериджу",
+    subtitle: "Запишитесь на бесплатную консультацию. Выберите удобное время — мы вам перезвоним.",
+    cta: "Записаться на консультацию",
+    phoneNote: "Хотите поговорить прямо сейчас? Звоните {phone}",
+    securitiesNote: "Вопросы по ценным бумагам? Специалист всё объяснит.",
+    securitiesCta: "Записаться на звонок",
+  },
   chooseDay: "Выберите день",
   chooseSlot: "Выберите время (по еревaнскому времени)",
   noSlotsToday: "На этот день нет свободного времени.",
@@ -204,6 +249,21 @@ const hy: Dictionary = {
   stepDetails: "Ձեր տվյալները",
   stepOtp: "Հեռախոսահամարի հաստատում",
   stepDone: "Ավարտված",
+  stepTopic: "Թեմա",
+  stepOfLabel: "Քայլ {current}/{total}",
+  chooseTopic: "Ի՞նչ եք ցանկանում քննարկել",
+  modalClose: "Փակել",
+  recapTopic: "Թեմա",
+  recapWhen: "Երբ",
+  landing: {
+    kicker: "Բրոքերային ծառայություններ և արժեթղթեր",
+    title: "Խոսեք բրոքերային մասնագետի հետ",
+    subtitle: "Գրանցվեք անվճար խորհրդատվության համար։ Ընտրեք Ձեզ հարմար ժամը՝ մենք կզանգենք Ձեզ։",
+    cta: "Գրանցվել խորհրդատվության",
+    phoneNote: "Նախընտրու՞մ եք զրուցել հիմա։ Զանգահարեք {phone}",
+    securitiesNote: "Հարցեր ունե՞ք արժեթղթերի վերաբերյալ։ Մասնագետը կպարզաբանի ամեն ինչ։",
+    securitiesCta: "Գրանցվել զանգի",
+  },
   chooseDay: "Ընտրեք օրը",
   chooseSlot: "Ընտրեք ժամը (Երևանի ժամանակով)",
   noSlotsToday: "Այս օրվա համար ազատ ժամեր չկան։",
